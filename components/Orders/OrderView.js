@@ -1,5 +1,5 @@
 import React from 'react'
-import CurrencyFormat from 'react-currency-format'
+import CurrencyFormatter from '../CurrencyFormatter'
 
 const OrderView = ({ data }) => {
     return (
@@ -14,7 +14,9 @@ const OrderView = ({ data }) => {
                         <>
                             <div key={idx} className='flex justify-between mx-2 my-2'>
                                 <p className='text-base'>{`${idx + 1}. ${item.title}`}</p>
-                                <p className='whitespace-nowrap'>{<CurrencyFormat value={item.price} displayType={'text'} thousandSeparator={true} prefix={'Rs. '} />}</p>
+                                <p className='whitespace-nowrap'>{
+                                    <CurrencyFormatter amount={item.price} currency='INR' />
+                                }</p>
                             </div>
                         </>
                     ))}

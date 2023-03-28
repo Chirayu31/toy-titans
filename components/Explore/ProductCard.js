@@ -2,7 +2,7 @@ import { indexedDb } from '@/utils/indexDb'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import CurrencyFormat from 'react-currency-format';
+import CurrencyFormatter from '../CurrencyFormatter';
 
 const ProductCard = ({ _id, title, price, image }) => {
 
@@ -66,7 +66,7 @@ const ProductCard = ({ _id, title, price, image }) => {
                     {title}
                 </p>
                 <p className='text-center text-xl font-bold'>
-                    {<CurrencyFormat value={price} displayType={'text'} thousandSeparator={true} prefix={'Rs. '} />}
+                    {<CurrencyFormatter amount={price} currency='INR' />}
                 </p>
             </div>
             <div className='flex w-full justify-center gap-2 my-2 '>

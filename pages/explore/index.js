@@ -3,6 +3,8 @@ import ProductCard from '@/components/Explore/ProductCard';
 import ProductContainer from '@/components/Explore/ProductContainer';
 import fetchProducts from '@/utils/fetchProducts';
 import fetchSearchResults from '@/utils/fetchSearchResults';
+import { RotatingSquare } from 'react-loader-spinner';
+import axios from 'axios';
 
 const initialState = {
     products: [],
@@ -36,7 +38,7 @@ const Explore = () => {
         async function fetchData() {
             try {
                 dispatch({ type: 'setLoading', payload: true });
-                const data = await fetchProducts(state.page);
+                const data = await fetchProducts(0);
                 dispatch({ type: 'setProducts', payload: data });
                 dispatch({ type: 'setLoading', payload: false });
             } catch (error) {
@@ -106,10 +108,20 @@ const Explore = () => {
             <ProductContainer>
                 {state.products.map(product => <ProductCard key={product._id} {...product} />)}
             </ProductContainer>
-            {state.loading ? <p>Loading</p> : <></>}
+
 
             <div className='w-full flex justify-center mt-12'>
-                <button onClick={e => loadHandler(e)}> Load more </button>
+                {state.loading ? <RotatingSquare
+                    height="100"
+                    width="100"
+                    color="#ffffff"
+                    ariaLabel="rotating-square-loading"
+                    strokeWidth="2"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                /> : <button className='mb-2 border-2 border-white p-1' onClick={e => loadHandler(e)}> Load more </button>}
+
             </div>
         </div>
     )

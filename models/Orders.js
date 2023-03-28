@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+import Product from "./Product";
+import User from './User'
 const ordersSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,

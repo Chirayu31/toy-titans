@@ -9,33 +9,28 @@ function Success() {
     const router = useRouter()
     const products = useLiveQuery(() => indexedDb.products.toArray());
     const { data: session } = useSession()
-    const [done, setDone] = useState(0)
-    // console.log(products)
-    useEffect(() => {
-        let ids = []
-        products?.map(product => ids.push(product?.product_id))
 
-        async function createPost() {
-            if (ids.length >= 1 && session && !done) {
-                try {
-                    await axios.post('/api/order/createOrder', {
-                        ids,
-                        email: session?.user.email
-                    })
+    async function createOrder(ids, email) {
+        try {
+            await axios.post('/api/order/createOrder', {
+                ids,
+                email
+            })
 
-                    indexedDb.products.clear()
-                    router.push('/')
-                    setDone(1)
-                    // console.log(data)
-                } catch (error) {
-                    console.log(error.message)
-                }
-
-            }
+            indexedDb.products.clear()
+            // router.push('/')
+        } catch (error) {
+            console.log(error.message)
         }
-        createPost()
+    }
 
-    }, [products, router, session, done])
+    useEffect(() => {
+        let ids = products?.map(product => product?.product_id)
+
+        if (ids?.length && session) {
+            createOrder(ids, session?.user.email)
+        }
+    }, [products, session])
 
     return (
         <div className="flex flex-col items-center min-h-screen mt-40">

@@ -23,8 +23,8 @@ export default async function handler(req, res) {
         },
         line_items: transformedItems,
         mode: "payment",
-        success_url: "http://localhost:3000/success",
-        cancel_url: "http://localhost:3000/cancel",
+        success_url: process.env.NODE_ENV == "production" ? "https://toy-titans.vercel.app/success" : "http://localhost:3000/success",
+        cancel_url: process.env.NODE_ENV == "production" ? "https://toy-titans.vercel.app/cancel" : "http://localhost:3000/cancel",
         metadata: {
             email,
         },
